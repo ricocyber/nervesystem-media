@@ -10,6 +10,7 @@ from .ingest import ingest
 from .models import RenderedClip, ReviewManifest
 from .reframe import choose_crop
 from .render import render_clip
+from .review import write_review_html
 from .transcribe import transcribe
 
 
@@ -69,6 +70,7 @@ def run_pipeline(
         candidates=selected,
     )
     manifest.save(job_dir / "review.json")
+    write_review_html(manifest, job_dir / "review.html")
 
     if render:
         for index, candidate in enumerate(selected, start=1):
@@ -91,5 +93,6 @@ def run_pipeline(
                 )
             )
             manifest.save(job_dir / "review.json")
+            write_review_html(manifest, job_dir / "review.html")
 
     return manifest
