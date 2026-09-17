@@ -12,6 +12,7 @@ from rich.table import Table
 from .benchmark import evaluate
 from .highlights import ollama_available
 from .pipeline import run_pipeline
+from .system import ffmpeg_capabilities
 
 app = typer.Typer(no_args_is_help=True, add_completion=False)
 console = Console()
@@ -28,6 +29,10 @@ def doctor() -> None:
     for binary in ("ffmpeg", "ffprobe"):
         found = shutil.which(binary)
         table.add_row(binary, "OK" if found else "MISSING", found or "install a full ffmpeg build")
+
+    if shutil.which("ffmpeg"):
+        for capability, ok in ffmpeg_capabilities().items():
+            table.add_row(f"ffmpeg:{capability}", "OK" if ok else "MISSING", "required for final MP4 render")
 
     table.add_row("Ollama", "OK" if ollama_available() else "OPTIONAL", "local ranking model" if ollama_available() else "heuristic fallback will be used")
     table.add_row("OS", "INFO", f"{platform.system()} {platform.machine()}")
