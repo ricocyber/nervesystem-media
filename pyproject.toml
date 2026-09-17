@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "clipper-agent"
+version = "0.1.0"
+description = "Local-first, zero-paid-credit long-video to short-form clip pipeline"
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+license = {text = "MIT"}
+dependencies = [
+  "typer>=0.12.5",
+  "rich>=13.8",
+  "pydantic>=2.9",
+  "faster-whisper>=1.0.3",
+  "opencv-python-headless>=4.10",
+  "numpy>=1.26",
+  "requests>=2.32",
+  "yt-dlp>=2026.8.1"
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3"]
+
+[project.scripts]
+clipper-agent = "clipper_agent.cli:app"
+
+[tool.setuptools.packages.find]
+include = ["clipper_agent*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
