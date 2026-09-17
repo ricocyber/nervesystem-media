@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from .models import Candidate, CropRect
-from .system import require_binary, run_checked
+from .system import require_binary, require_ffmpeg_capabilities, run_checked
 
 
 def _escape_filter_path(path: Path) -> str:
@@ -21,6 +21,7 @@ def render_clip(
     crf: int = 20,
 ) -> Path:
     require_binary("ffmpeg")
+    require_ffmpeg_capabilities()
     output_path.parent.mkdir(parents=True, exist_ok=True)
     duration = max(0.1, candidate.end - candidate.start)
 
