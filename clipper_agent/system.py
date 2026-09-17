@@ -16,6 +16,38 @@ def require_binary(name: str) -> str:
     return found
 
 
+def _ffmpeg_listing(flag: str) -> str:
+    require_binary("ffmpeg")
+    proc = subprocess.run(
+        ["ffmpeg", "-hide_banner", flag],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    return (proc.stdout or "") + "\n" + (proc.stderr or "")
+
+
+def ffmpeg_capabilities() -> dict[str, bool]:
+    filters = _ffmpeg_listing("-filters")
+    encoders = _ffmpeg_listing("-encoders")
+    return {
+        "ass_filter": " ass " in filters or " ass             " in filters,
+        "libx264": "libx264" in encoders,
+        "aac": " aac " in encoders or "aac" in encoders,
+    }
+
+
+def require_ffmpeg_capabilities() -> None:
+    caps = ffmpeg_capabilities()
+    missing = [name for name, ok in caps.items() if not ok]
+    if missing:
+        raise ExternalToolError(
+            "FFmpeg is installed but missing required capabilities: "
+            + ", ".join(missing)
+            + ". Install a full FFmpeg build with libass, libx264, and AAC."
+        )
+
+
 def ffprobe_video(path: str | Path) -> tuple[int, int, float]:
     require_binary("ffprobe")
     cmd = [
