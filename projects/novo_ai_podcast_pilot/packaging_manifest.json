@@ -1,0 +1,33 @@
+{
+  "selected_title": "AI Can Act Now. Who Gives It Permission?",
+  "selected_thumbnail": "T02",
+  "titles": [
+    "AI Can Act Now. Who Gives It Permission?",
+    "The AI Permission Problem Nobody Is Ready For",
+    "What Happens When AI Can Move Money?",
+    "AI Is Leaving the Chatbox",
+    "Who Is Actually in Control of AI Agents?",
+    "The Missing Layer Between AI and the Real World",
+    "When AI Controls Machines, Who Is Responsible?",
+    "The Next AI Battle Is Not About Intelligence",
+    "Why Autonomous AI Changes Everything",
+    "The Infrastructure AI Agents Are Missing"
+  ],
+  "thumbnail_concepts": [
+    {
+      "id": "T01",
+      "visual": "two photoreal podcast hosts at a dark professional studio desk; behind them a robot arm and payment screen",
+      "text": "AI CAN ACT"
+    },
+    {
+      "id": "T02",
+      "visual": "Maya foreground looking toward a screen marked EXECUTING while Axel points toward a machine control diagram",
+      "text": "WHO GAVE PERMISSION?"
+    },
+    {
+      "id": "T03",
+      "visual": "split visual: payment rail and industrial robot separated by a single authority gate",
+      "text": "THE MISSING LAYER"
+    }
+  ]
+}
