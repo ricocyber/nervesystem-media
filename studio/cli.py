@@ -117,6 +117,26 @@ def verify_ltx(
     typer.echo(json.dumps(LTXAdapter(repo).verify(), indent=2))
 
 
+@app.command("render-ltx-shot")
+def render_ltx_shot(
+    task: Path = typer.Argument(..., exists=True, file_okay=True, dir_okay=False),
+    repo: Path = typer.Option(Path.home() / "ltx-video", "--repo"),
+    conditioning: Path | None = typer.Option(None, "--conditioning"),
+    seed: int = typer.Option(42, "--seed"),
+) -> None:
+    """Render one queued shot through the verified local LTX-Video adapter."""
+    payload = json.loads(task.read_text(encoding="utf-8"))
+    adapter = LTXAdapter(repo)
+    result = adapter.generate(
+        prompt=payload["prompt"],
+        output_path=Path(payload["output_video"]),
+        duration_seconds=float(payload["duration_seconds"]),
+        seed=seed,
+        conditioning_media_path=conditioning,
+    )
+    typer.echo(json.dumps(result.__dict__, indent=2))
+
+
 @app.command("voicebox-profiles")
 def voicebox_profiles(
     base_url: str = typer.Option("http://127.0.0.1:17493", "--base-url"),
