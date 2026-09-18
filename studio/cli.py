@@ -12,6 +12,9 @@ from .orchestrator import StudioOrchestrator
 from .queue import build_shot_queue
 from .runtime import check_runtime, save_runtime_report
 from .shot_runner import run_shot_task
+from .adapters.ltx import LTXAdapter
+from .adapters.voicebox import VoiceboxAdapter
+from .narration import render_narration
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -104,6 +107,38 @@ def run_shot(
     typer.echo(
         f"{result.shot_id} rendered with {result.adapter} -> {result.output_video}"
     )
+
+
+@app.command("verify-ltx")
+def verify_ltx(
+    repo: Path = typer.Option(Path.home() / "ltx-video", "--repo"),
+) -> None:
+    """Verify the local LTX-Video clone and its inference CLI."""
+    typer.echo(json.dumps(LTXAdapter(repo).verify(), indent=2))
+
+
+@app.command("voicebox-profiles")
+def voicebox_profiles(
+    base_url: str = typer.Option("http://127.0.0.1:17493", "--base-url"),
+) -> None:
+    """List locally available Voicebox profiles."""
+    adapter = VoiceboxAdapter(base_url=base_url)
+    typer.echo(json.dumps(adapter.list_profiles(), indent=2))
+
+
+@app.command("render-narration")
+def render_narration_cmd(
+    project: Path = typer.Argument(..., exists=True, file_okay=False, dir_okay=True),
+    profile_id: str = typer.Option(..., "--profile-id"),
+    base_url: str = typer.Option("http://127.0.0.1:17493", "--base-url"),
+) -> None:
+    """Generate scheduled narration lines and mix them into a 30-second stem."""
+    output = render_narration(
+        project_dir=project,
+        profile_id=profile_id,
+        base_url=base_url,
+    )
+    typer.echo(f"Rendered narration -> {output}")
 
 
 if __name__ == "__main__":
