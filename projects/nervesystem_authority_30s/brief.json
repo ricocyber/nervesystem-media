@@ -1,0 +1,20 @@
+{
+  "title": "Who Authorized It?",
+  "objective": "Create a cinematic 30-second NerveSystem commercial that makes the AI-authority problem instantly understandable.",
+  "format": "commercial",
+  "target_audience": "AI founders, CTOs, CISOs, enterprise technology buyers, robotics and industrial automation leaders",
+  "duration_seconds": 30,
+  "topic": "AI agents can act in the real world, but intelligence is not authority",
+  "funnel_stage": "discovery",
+  "language": "en",
+  "realism": "photoreal",
+  "platforms": ["youtube", "instagram", "linkedin"],
+  "constraints": [
+    "No slideshow treatment",
+    "At least one visible human operator",
+    "At least one real-world machine action",
+    "At least one financial/software action",
+    "Strong sound design",
+    "NerveSystem shown as authority gate, not as magical AI"
+  ]
+}
