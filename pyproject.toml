@@ -26,6 +26,7 @@ dev = ["pytest>=8.3"]
 [project.scripts]
 clipper-agent = "clipper_agent.cli:app"
 nerve-studio = "studio.cli:app"
+nerve-analytics = "analytics.cli:app"
 
 [tool.setuptools.packages.find]
 include = ["clipper_agent*", "virality*", "studio*", "analytics*"]
