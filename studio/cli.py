@@ -19,6 +19,7 @@ from .continuity import prepare_continuity_assets
 from .scheduler import build_render_waves
 from virality.project_gate import evaluate_project_gate
 from .preflight import build_preflight_report
+from .autonomous import run_autonomous_project
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -111,6 +112,25 @@ def run_shot(
     typer.echo(
         f"{result.shot_id} rendered with {result.adapter} -> {result.output_video}"
     )
+
+
+@app.command("run-project")
+def run_project(
+    project: Path = typer.Argument(..., exists=True, file_okay=False, dir_okay=True),
+    ltx_repo: Path = typer.Option(Path.home() / "ltx-video", "--ltx-repo"),
+    voice_profile_id: str | None = typer.Option(None, "--voice-profile-id"),
+    voicebox_url: str = typer.Option("http://127.0.0.1:17493", "--voicebox-url"),
+    seed: int = typer.Option(42, "--seed"),
+) -> None:
+    """Run every locally supported production department for one project."""
+    state = run_autonomous_project(
+        project_dir=project,
+        ltx_repo=ltx_repo,
+        voice_profile_id=voice_profile_id,
+        voicebox_url=voicebox_url,
+        seed=seed,
+    )
+    typer.echo(json.dumps(state, indent=2))
 
 
 @app.command("preflight")
