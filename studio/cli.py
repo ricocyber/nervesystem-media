@@ -20,6 +20,8 @@ from .scheduler import build_render_waves
 from virality.project_gate import evaluate_project_gate
 from .preflight import build_preflight_report
 from .autonomous import run_autonomous_project
+from .adapters.musetalk_mac import MuseTalkMacAdapter
+from .digital_human import render_talking_human
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -200,6 +202,35 @@ def render_ltx_shot(
         duration_seconds=float(payload["duration_seconds"]),
         seed=seed,
         conditioning_media_path=conditioning,
+    )
+    typer.echo(json.dumps(result.__dict__, indent=2))
+
+
+@app.command("verify-musetalk")
+def verify_musetalk(
+    base_url: str = typer.Option("http://127.0.0.1:8000", "--base-url"),
+) -> None:
+    """Verify the local MuseTalk-Mac lip-sync service."""
+    typer.echo(json.dumps(MuseTalkMacAdapter(base_url=base_url).verify(), indent=2))
+
+
+@app.command("render-talking-human")
+def render_talking_human_cmd(
+    reference_video: Path = typer.Option(..., "--reference-video", exists=True),
+    audio: Path = typer.Option(..., "--audio", exists=True),
+    output: Path = typer.Option(..., "--output"),
+    avatar_key: str = typer.Option(..., "--avatar-key"),
+    base_url: str = typer.Option("http://127.0.0.1:8000", "--base-url"),
+    no_warmup: bool = typer.Option(False, "--no-warmup"),
+) -> None:
+    """Lip-sync a local/authorized human source video to local speech audio."""
+    result = render_talking_human(
+        reference_video=reference_video,
+        narration_audio=audio,
+        output_video=output,
+        avatar_key=avatar_key,
+        musetalk_url=base_url,
+        warmup=not no_warmup,
     )
     typer.echo(json.dumps(result.__dict__, indent=2))
 
