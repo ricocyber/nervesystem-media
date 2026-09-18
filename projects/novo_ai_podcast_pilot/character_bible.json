@@ -1,0 +1,42 @@
+{
+  "show": "NOVO WORLD AI",
+  "set_id": "NOVO_PODCAST_SET_01",
+  "characters": [
+    {
+      "id": "MAYA_01",
+      "name": "Maya",
+      "role": "business and money desk host",
+      "presentation": "adult professional synthetic host, calm, sharp, curious",
+      "wardrobe": "dark tailored jacket over neutral shirt, no visible brand marks",
+      "voice_profile_env": "NOVO_MAYA_VOICE_PROFILE",
+      "avatar_key": "novo_maya_01",
+      "camera": "CAM_B",
+      "continuity": [
+        "same face",
+        "same hairstyle",
+        "same wardrobe",
+        "same seated position",
+        "same microphone",
+        "same key-light direction"
+      ]
+    },
+    {
+      "id": "AXEL_01",
+      "name": "Axel",
+      "role": "machines and infrastructure desk host",
+      "presentation": "adult professional synthetic host, technical, direct, grounded",
+      "wardrobe": "charcoal overshirt over black tee, no visible brand marks",
+      "voice_profile_env": "NOVO_AXEL_VOICE_PROFILE",
+      "avatar_key": "novo_axel_01",
+      "camera": "CAM_C",
+      "continuity": [
+        "same face",
+        "same hairstyle",
+        "same wardrobe",
+        "same seated position",
+        "same microphone",
+        "same key-light direction"
+      ]
+    }
+  ]
+}
