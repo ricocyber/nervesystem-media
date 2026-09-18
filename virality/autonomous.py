@@ -7,6 +7,7 @@ from pathlib import Path
 
 from .ollama_brain import OllamaViralityBrain
 from .research import ResearchPacket
+from router.ollama_router import OllamaModelRouter
 
 
 def run_virality_funnel(
@@ -14,14 +15,18 @@ def run_virality_funnel(
     audience: str,
     channel_promise: str,
     output_dir: Path,
-    model: str = "qwen2.5:7b",
+    model: str = "auto",
+    critic_model: str = "auto",
     count: int = 100,
     shortlist: int = 10,
     package_top: int = 3,
     research_packet_path: Path | None = None,
 ) -> dict:
     output_dir.mkdir(parents=True, exist_ok=True)
-    brain = OllamaViralityBrain(model=model)
+    router = OllamaModelRouter()
+    generator_model = router.route("creative").model if model == "auto" else model
+    selected_critic_model = router.route("reasoning").model if critic_model == "auto" else critic_model
+    brain = OllamaViralityBrain(model=generator_model, critic_model=selected_critic_model)
     status = brain.verify()
     if not status.get("ready"):
         raise RuntimeError(f"Ollama unavailable: {status}")
@@ -49,7 +54,8 @@ def run_virality_funnel(
 
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
-        "model": model,
+        "model": generator_model,
+        "critic_model": selected_critic_model,
         "topic_space": topic_space,
         "audience": audience,
         "channel_promise": channel_promise,
