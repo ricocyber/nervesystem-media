@@ -20,6 +20,10 @@ from .scheduler import build_render_waves
 from virality.project_gate import evaluate_project_gate
 from .preflight import build_preflight_report
 from .autonomous import run_autonomous_project
+from .adapters.musetalk_mac import MuseTalkMacAdapter
+from .digital_human import render_talking_human
+from .podcast import build_camera_timeline, render_host_video
+from .podcast_edit import edit_podcast_master
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -200,6 +204,85 @@ def render_ltx_shot(
         duration_seconds=float(payload["duration_seconds"]),
         seed=seed,
         conditioning_media_path=conditioning,
+    )
+    typer.echo(json.dumps(result.__dict__, indent=2))
+
+
+@app.command("edit-podcast")
+def edit_podcast(
+    project: Path = typer.Argument(..., exists=True, file_okay=False, dir_okay=True),
+    host_a_video: Path = typer.Option(..., "--host-a-video", exists=True),
+    host_b_video: Path = typer.Option(..., "--host-b-video", exists=True),
+    host_a_audio: Path = typer.Option(..., "--host-a-audio", exists=True),
+    host_b_audio: Path = typer.Option(..., "--host-b-audio", exists=True),
+    output: Path | None = typer.Option(None, "--output"),
+) -> None:
+    """Assemble a speaker-aware two-host podcast master."""
+    master = edit_podcast_master(
+        project_dir=project,
+        host_a_video=host_a_video,
+        host_b_video=host_b_video,
+        host_a_audio=host_a_audio,
+        host_b_audio=host_b_audio,
+        output_path=output,
+    )
+    typer.echo(f"Rendered podcast master -> {master}")
+
+
+@app.command("podcast-camera-plan")
+def podcast_camera_plan(
+    project: Path = typer.Argument(..., exists=True, file_okay=False, dir_okay=True),
+) -> None:
+    """Build the speaker-aware camera timeline for a podcast project."""
+    typer.echo(json.dumps(build_camera_timeline(project), indent=2))
+
+
+@app.command("render-podcast-host")
+def render_podcast_host(
+    project: Path = typer.Argument(..., exists=True, file_okay=False, dir_okay=True),
+    character_id: str = typer.Option(..., "--character-id"),
+    reference_video: Path = typer.Option(..., "--reference-video", exists=True),
+    profile_id: str = typer.Option(..., "--profile-id"),
+    voicebox_url: str = typer.Option("http://127.0.0.1:17493", "--voicebox-url"),
+    musetalk_url: str = typer.Option("http://127.0.0.1:8000", "--musetalk-url"),
+) -> None:
+    """Render one full time-aligned podcast host track."""
+    result = render_host_video(
+        project_dir=project,
+        character_id=character_id,
+        reference_video=reference_video,
+        profile_id=profile_id,
+        voicebox_url=voicebox_url,
+        musetalk_url=musetalk_url,
+    )
+    typer.echo(json.dumps(result.__dict__, indent=2))
+
+
+@app.command("verify-musetalk")
+def verify_musetalk(
+    base_url: str = typer.Option("http://127.0.0.1:8000", "--base-url"),
+) -> None:
+    """Verify the local MuseTalk-Mac lip-sync service."""
+    typer.echo(json.dumps(MuseTalkMacAdapter(base_url=base_url).verify(), indent=2))
+
+
+@app.command("render-talking-human")
+def render_talking_human_cmd(
+    reference_video: Path = typer.Option(..., "--reference-video", exists=True),
+    audio: Path = typer.Option(..., "--audio", exists=True),
+    output: Path = typer.Option(..., "--output"),
+    avatar_key: str = typer.Option(..., "--avatar-key"),
+    base_url: str = typer.Option("http://127.0.0.1:8000", "--base-url"),
+    no_warmup: bool = typer.Option(False, "--no-warmup"),
+) -> None:
+    """Lip-sync a local/authorized human source video to local speech audio."""
+    result = render_talking_human(
+        reference_video=reference_video,
+        narration_audio=audio,
+        output_video=output,
+        avatar_key=avatar_key,
+        musetalk_url=base_url,
+        warmup=not no_warmup,
     )
     typer.echo(json.dumps(result.__dict__, indent=2))
 

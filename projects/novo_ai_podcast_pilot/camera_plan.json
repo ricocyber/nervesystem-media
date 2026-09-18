@@ -1,0 +1,33 @@
+{
+  "cameras": [
+    {
+      "id": "CAM_A",
+      "role": "wide_two_shot",
+      "lens": "35mm",
+      "framing": "both hosts, desk, microphones, practical screens"
+    },
+    {
+      "id": "CAM_B",
+      "role": "maya_close",
+      "lens": "70mm",
+      "framing": "Maya medium close-up, eye line toward Axel"
+    },
+    {
+      "id": "CAM_C",
+      "role": "axel_close",
+      "lens": "70mm",
+      "framing": "Axel medium close-up, eye line toward Maya"
+    }
+  ],
+  "editing_rules": {
+    "speaker_closeup_default": true,
+    "wide_every_seconds": 18,
+    "reaction_cut_max_seconds": 2.0,
+    "avoid": [
+      "cut every sentence mechanically",
+      "constant zooms",
+      "jump cuts while mouth is mid-word",
+      "identical camera timing every turn"
+    ]
+  }
+}
