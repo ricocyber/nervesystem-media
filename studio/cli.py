@@ -11,6 +11,7 @@ from .models import ProductionBrief
 from .orchestrator import StudioOrchestrator
 from .queue import build_shot_queue
 from .runtime import check_runtime, save_runtime_report
+from .shot_runner import run_shot_task
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -86,6 +87,23 @@ def prep_project(
     """Create one queued work order per cinematic shot."""
     queue = build_shot_queue(project, output_dir)
     typer.echo(f"Queued {queue['shot_count']} shots for {queue['project']}.")
+
+
+@app.command("run-shot")
+def run_shot(
+    task: Path = typer.Argument(..., exists=True, file_okay=True, dir_okay=False),
+    config: Path = typer.Option(Path("studio.local.json"), "--config"),
+) -> None:
+    """Execute exactly one queued shot with the first enabled compatible local adapter."""
+    if not config.exists():
+        raise typer.BadParameter(
+            "Local adapter config not found. Copy studio.local.example.json to studio.local.json "
+            "and fill only verified entrypoints."
+        )
+    result = run_shot_task(task, config)
+    typer.echo(
+        f"{result.shot_id} rendered with {result.adapter} -> {result.output_video}"
+    )
 
 
 if __name__ == "__main__":
