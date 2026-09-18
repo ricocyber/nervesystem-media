@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from .ollama_brain import OllamaViralityBrain
+from .research import ResearchPacket
 
 
 def run_virality_funnel(
@@ -17,6 +18,7 @@ def run_virality_funnel(
     count: int = 100,
     shortlist: int = 10,
     package_top: int = 3,
+    research_packet_path: Path | None = None,
 ) -> dict:
     output_dir.mkdir(parents=True, exist_ok=True)
     brain = OllamaViralityBrain(model=model)
@@ -24,11 +26,18 @@ def run_virality_funnel(
     if not status.get("ready"):
         raise RuntimeError(f"Ollama unavailable: {status}")
 
+    research_context = None
+    research_packet = None
+    if research_packet_path:
+        research_packet = ResearchPacket.load(research_packet_path)
+        research_context = research_packet.prompt_context()
+
     ideas = brain.generate_ideas(
         topic_space=topic_space,
         audience=audience,
         channel_promise=channel_promise,
         count=count,
+        research_context=research_context,
     )
     ranked = brain.critic_score(ideas)
     survivors = ranked[:shortlist]
@@ -45,6 +54,7 @@ def run_virality_funnel(
         "audience": audience,
         "channel_promise": channel_promise,
         "idea_count": len(ideas),
+        "research_packet": str(research_packet_path) if research_packet_path else None,
         "ranked": [
             {
                 "idea": asdict(item.idea),
