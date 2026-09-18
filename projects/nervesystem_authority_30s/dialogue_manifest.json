@@ -1,0 +1,36 @@
+{
+  "voice_id": "NARRATOR_01",
+  "language": "en",
+  "lines": [
+    {
+      "start": 0.5,
+      "end": 3.4,
+      "text": "AI is learning to act.",
+      "delivery": "quiet, factual, controlled"
+    },
+    {
+      "start": 4.1,
+      "end": 7.7,
+      "text": "But intelligence is not authority.",
+      "delivery": "slightly firmer emphasis on authority"
+    },
+    {
+      "start": 11.2,
+      "end": 18.9,
+      "text": "NerveSystem verifies intent, policy, and authority before software touches the real world.",
+      "delivery": "precise, deliberate"
+    },
+    {
+      "start": 20.0,
+      "end": 24.7,
+      "text": "Every approved action leaves proof.",
+      "delivery": "measured, low-key emphasis on proof"
+    },
+    {
+      "start": 25.4,
+      "end": 29.8,
+      "text": "AI can think. NerveSystem decides what gets authority to act.",
+      "delivery": "confident close, not salesy"
+    }
+  ]
+}
