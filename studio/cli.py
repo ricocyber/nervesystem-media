@@ -12,6 +12,11 @@ from .orchestrator import StudioOrchestrator
 from .queue import build_shot_queue
 from .runtime import check_runtime, save_runtime_report
 from .shot_runner import run_shot_task
+from .adapters.ltx import LTXAdapter
+from .adapters.voicebox import VoiceboxAdapter
+from .narration import render_narration
+from .continuity import prepare_continuity_assets
+from .scheduler import build_render_waves
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -104,6 +109,75 @@ def run_shot(
     typer.echo(
         f"{result.shot_id} rendered with {result.adapter} -> {result.output_video}"
     )
+
+
+@app.command("render-schedule")
+def render_schedule(
+    project: Path = typer.Argument(..., exists=True, file_okay=False, dir_okay=True),
+) -> None:
+    """Show dependency-safe render waves for the project."""
+    typer.echo(json.dumps({"waves": build_render_waves(project)}, indent=2))
+
+
+@app.command("prepare-continuity")
+def prepare_continuity(
+    project: Path = typer.Argument(..., exists=True, file_okay=False, dir_okay=True),
+) -> None:
+    """Extract reference frames from establishing shots for later identity/scene continuity."""
+    result = prepare_continuity_assets(project)
+    typer.echo(json.dumps(result, indent=2))
+
+
+@app.command("verify-ltx")
+def verify_ltx(
+    repo: Path = typer.Option(Path.home() / "ltx-video", "--repo"),
+) -> None:
+    """Verify the local LTX-Video clone and its inference CLI."""
+    typer.echo(json.dumps(LTXAdapter(repo).verify(), indent=2))
+
+
+@app.command("render-ltx-shot")
+def render_ltx_shot(
+    task: Path = typer.Argument(..., exists=True, file_okay=True, dir_okay=False),
+    repo: Path = typer.Option(Path.home() / "ltx-video", "--repo"),
+    conditioning: Path | None = typer.Option(None, "--conditioning"),
+    seed: int = typer.Option(42, "--seed"),
+) -> None:
+    """Render one queued shot through the verified local LTX-Video adapter."""
+    payload = json.loads(task.read_text(encoding="utf-8"))
+    adapter = LTXAdapter(repo)
+    result = adapter.generate(
+        prompt=payload["prompt"],
+        output_path=Path(payload["output_video"]),
+        duration_seconds=float(payload["duration_seconds"]),
+        seed=seed,
+        conditioning_media_path=conditioning,
+    )
+    typer.echo(json.dumps(result.__dict__, indent=2))
+
+
+@app.command("voicebox-profiles")
+def voicebox_profiles(
+    base_url: str = typer.Option("http://127.0.0.1:17493", "--base-url"),
+) -> None:
+    """List locally available Voicebox profiles."""
+    adapter = VoiceboxAdapter(base_url=base_url)
+    typer.echo(json.dumps(adapter.list_profiles(), indent=2))
+
+
+@app.command("render-narration")
+def render_narration_cmd(
+    project: Path = typer.Argument(..., exists=True, file_okay=False, dir_okay=True),
+    profile_id: str = typer.Option(..., "--profile-id"),
+    base_url: str = typer.Option("http://127.0.0.1:17493", "--base-url"),
+) -> None:
+    """Generate scheduled narration lines and mix them into a 30-second stem."""
+    output = render_narration(
+        project_dir=project,
+        profile_id=profile_id,
+        base_url=base_url,
+    )
+    typer.echo(f"Rendered narration -> {output}")
 
 
 if __name__ == "__main__":
