@@ -16,6 +16,7 @@ from .adapters.ltx import LTXAdapter
 from .adapters.voicebox import VoiceboxAdapter
 from .narration import render_narration
 from .continuity import prepare_continuity_assets
+from .scheduler import build_render_waves
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -108,6 +109,14 @@ def run_shot(
     typer.echo(
         f"{result.shot_id} rendered with {result.adapter} -> {result.output_video}"
     )
+
+
+@app.command("render-schedule")
+def render_schedule(
+    project: Path = typer.Argument(..., exists=True, file_okay=False, dir_okay=True),
+) -> None:
+    """Show dependency-safe render waves for the project."""
+    typer.echo(json.dumps({"waves": build_render_waves(project)}, indent=2))
 
 
 @app.command("prepare-continuity")
