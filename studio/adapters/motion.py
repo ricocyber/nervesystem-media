@@ -11,7 +11,7 @@ class MotionGraphicsError(RuntimeError):
     pass
 
 
-W, H, FPS = 1920, 1080
+W, H, FPS = 1920, 1080, 24
 BG = (15, 18, 23)
 PANEL = (28, 34, 43)
 WHITE = (240, 244, 248)
