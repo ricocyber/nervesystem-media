@@ -67,7 +67,7 @@ class OllamaViralityBrain:
         except Exception as exc:
             raise ViralityBrainError(f"Invalid JSON from Ollama: {exc}") from exc
 
-    def generate_ideas(self, topic_space: str, audience: str, channel_promise: str, count: int = 100, batch_size: int = 20) -> list[Idea]:
+    def generate_ideas(self, topic_space: str, audience: str, channel_promise: str, count: int = 100, batch_size: int = 20, research_context: str | None = None) -> list[Idea]:
         ideas: list[Idea] = []
         seen: set[str] = set()
         attempts = 0
