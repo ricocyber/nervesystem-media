@@ -1,0 +1,53 @@
+{
+  "episode_id": "NOVO_PILOT_001",
+  "lines": [
+    {
+      "id": "L01",
+      "speaker": "MAYA_01",
+      "start": 0.0,
+      "end": 8.0,
+      "text": "AI is moving past the chat box. Companies are starting to give agents access to money, software, and physical systems.",
+      "delivery": "calm opening, immediate stakes"
+    },
+    {
+      "id": "L02",
+      "speaker": "AXEL_01",
+      "start": 8.0,
+      "end": 17.0,
+      "text": "And once software can actually do things, the biggest question changes. It is not only how smart the model is. It is who gave it permission.",
+      "delivery": "technical, concise"
+    },
+    {
+      "id": "L03",
+      "speaker": "MAYA_01",
+      "start": 17.0,
+      "end": 28.0,
+      "text": "That becomes a money problem fast. Imagine an agent that can approve vendors, initiate payments, or move inventory without a clean chain of authority.",
+      "delivery": "curious, raises financial stakes"
+    },
+    {
+      "id": "L04",
+      "speaker": "AXEL_01",
+      "start": 28.0,
+      "end": 40.0,
+      "text": "Now put the same idea inside a factory. A robot does not care whether a command came from a brilliant model. The machine only sees a command.",
+      "delivery": "grounded physical example"
+    },
+    {
+      "id": "L05",
+      "speaker": "MAYA_01",
+      "start": 40.0,
+      "end": 51.0,
+      "text": "So the infrastructure race may not be about building another model. It may be about building the layer that decides which models are actually allowed to act.",
+      "delivery": "synthesis, restrained emphasis"
+    },
+    {
+      "id": "L06",
+      "speaker": "AXEL_01",
+      "start": 51.0,
+      "end": 60.0,
+      "text": "That is the frontier we are watching here: intelligence, authority, and what happens when software finally reaches the real world.",
+      "delivery": "clean close"
+    }
+  ]
+}
