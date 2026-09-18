@@ -1,0 +1,50 @@
+{
+  "selected_title": "Who Authorized the AI?",
+  "selected_thumbnail": "T03",
+  "titles": [
+    "Who Authorized the AI?",
+    "AI Can Act. But Who Gave It Permission?",
+    "The AI Permission Problem Nobody Is Ready For",
+    "What Happens When AI Can Move Money?",
+    "AI Is Leaving the Chatbox",
+    "Before AI Touches the Real World, Someone Has to Authorize It",
+    "The Missing Control Layer for AI Agents",
+    "Your AI Agent Can Act. That Changes Everything.",
+    "When AI Controls Machines, Who Is in Charge?",
+    "The Question Every Autonomous AI System Must Answer"
+  ],
+  "thumbnail_concepts": [
+    {
+      "id": "T01",
+      "visual": "Human operator in dark control room foreground, industrial robot frozen mid-motion behind glass.",
+      "text": "WHO APPROVED THIS?",
+      "rule": "One face, one machine, one unanswered question."
+    },
+    {
+      "id": "T02",
+      "visual": "Split frame: high-value transfer on left, robotic arm on right, both stopped by a single physical-looking gate.",
+      "text": "AI HAS ACCESS",
+      "rule": "Title supplies the authority question; thumbnail supplies the scale of access."
+    },
+    {
+      "id": "T03",
+      "visual": "Close-up operator looking at a frozen command screen while a red authority barrier cuts across the frame.",
+      "text": "WHO AUTHORIZED IT?",
+      "rule": "Readable instantly on mobile; conflict is visible without explanation."
+    },
+    {
+      "id": "T04",
+      "visual": "Robotic arm inches from completing an action, giant control-state label hovering only as clean UI overlay.",
+      "text": "DENIED",
+      "rule": "Minimal words, strong visual tension."
+    },
+    {
+      "id": "T05",
+      "visual": "Enterprise payment interface showing EXECUTING with a human hand reaching toward an emergency stop control.",
+      "text": "TOO LATE?",
+      "rule": "Creates urgency while the title explains the AI authority subject."
+    }
+  ],
+  "package_rule": "The title and thumbnail must complement each other; they should not repeat the same sentence.",
+  "funnel_stage": "discovery"
+}

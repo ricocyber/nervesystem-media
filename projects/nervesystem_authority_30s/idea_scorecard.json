@@ -1,0 +1,23 @@
+{
+  "core_audience_fit": 9,
+  "casual_audience_fit": 9,
+  "new_audience_fit": 8,
+  "stakes": 9,
+  "curiosity_gap": 9,
+  "hook_promise": 9,
+  "proof_specificity": 8,
+  "title_potential": 9,
+  "thumbnail_potential": 9,
+  "novelty": 8,
+  "timeliness": 8,
+  "production_feasibility": 8,
+  "funnel_fit": 9,
+  "shareability": 9,
+  "rationale": {
+    "audience": "AI founders understand the infrastructure problem, business/technology viewers understand permission and money, and a new viewer can understand the question 'who authorized it?' without knowing NerveSystem.",
+    "stakes": "The video connects autonomous software to money and physical machines, making the authority problem concrete.",
+    "hook": "The viewer sees AI already acting before the explanation begins, then the authority question interrupts the action.",
+    "packaging": "The question 'Who Authorized It?' supports simple visual packaging around a frozen real-world action.",
+    "funnel": "This is discovery content. It explains the category/problem before asking anyone to buy NerveSystem."
+  }
+}

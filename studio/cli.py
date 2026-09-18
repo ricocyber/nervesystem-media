@@ -17,6 +17,8 @@ from .adapters.voicebox import VoiceboxAdapter
 from .narration import render_narration
 from .continuity import prepare_continuity_assets
 from .scheduler import build_render_waves
+from virality.project_gate import evaluate_project_gate
+from .preflight import build_preflight_report
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -109,6 +111,32 @@ def run_shot(
     typer.echo(
         f"{result.shot_id} rendered with {result.adapter} -> {result.output_video}"
     )
+
+
+@app.command("preflight")
+def preflight(
+    project: Path = typer.Argument(..., exists=True, file_okay=False, dir_okay=True),
+    output: Path | None = typer.Option(None, "--output"),
+) -> None:
+    """Run the full production preflight: idea gate, machine, repos, and render schedule."""
+    report = build_preflight_report(project)
+    payload = json.dumps(report, indent=2)
+    typer.echo(payload)
+    if output:
+        output.write_text(payload, encoding="utf-8")
+    if not report["ready_for_local_execution"]:
+        raise typer.Exit(code=2)
+
+
+@app.command("gate-project")
+def gate_project(
+    project: Path = typer.Argument(..., exists=True, file_okay=False, dir_okay=True),
+) -> None:
+    """Run the Virality Director + packaging gate before production."""
+    result = evaluate_project_gate(project)
+    typer.echo(json.dumps(result.__dict__, indent=2))
+    if not result.passed:
+        raise typer.Exit(code=2)
 
 
 @app.command("render-schedule")
