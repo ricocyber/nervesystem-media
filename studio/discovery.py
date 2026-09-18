@@ -65,7 +65,7 @@ def inspect_repo(name: str, base: Path | None = None) -> RepoDiscovery:
 def inspect_media_repos() -> list[RepoDiscovery]:
     return [
         inspect_repo(name)
-        for name in ("ltx-video", "digital-human", "voicebox", "video-creator")
+        for name in ("ltx-video", "digital-human", "voicebox", "video-creator", "musetalk-mac", "musetalk-mlx", "LivePortrait")
     ]
 
 
