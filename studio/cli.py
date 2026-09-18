@@ -22,6 +22,7 @@ from .preflight import build_preflight_report
 from .autonomous import run_autonomous_project
 from .adapters.musetalk_mac import MuseTalkMacAdapter
 from .digital_human import render_talking_human
+from .podcast import build_camera_timeline, render_host_video
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -202,6 +203,35 @@ def render_ltx_shot(
         duration_seconds=float(payload["duration_seconds"]),
         seed=seed,
         conditioning_media_path=conditioning,
+    )
+    typer.echo(json.dumps(result.__dict__, indent=2))
+
+
+@app.command("podcast-camera-plan")
+def podcast_camera_plan(
+    project: Path = typer.Argument(..., exists=True, file_okay=False, dir_okay=True),
+) -> None:
+    """Build the speaker-aware camera timeline for a podcast project."""
+    typer.echo(json.dumps(build_camera_timeline(project), indent=2))
+
+
+@app.command("render-podcast-host")
+def render_podcast_host(
+    project: Path = typer.Argument(..., exists=True, file_okay=False, dir_okay=True),
+    character_id: str = typer.Option(..., "--character-id"),
+    reference_video: Path = typer.Option(..., "--reference-video", exists=True),
+    profile_id: str = typer.Option(..., "--profile-id"),
+    voicebox_url: str = typer.Option("http://127.0.0.1:17493", "--voicebox-url"),
+    musetalk_url: str = typer.Option("http://127.0.0.1:8000", "--musetalk-url"),
+) -> None:
+    """Render one full time-aligned podcast host track."""
+    result = render_host_video(
+        project_dir=project,
+        character_id=character_id,
+        reference_video=reference_video,
+        profile_id=profile_id,
+        voicebox_url=voicebox_url,
+        musetalk_url=musetalk_url,
     )
     typer.echo(json.dumps(result.__dict__, indent=2))
 
