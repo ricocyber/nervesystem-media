@@ -15,6 +15,7 @@ from .shot_runner import run_shot_task
 from .adapters.ltx import LTXAdapter
 from .adapters.voicebox import VoiceboxAdapter
 from .narration import render_narration
+from .continuity import prepare_continuity_assets
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -107,6 +108,15 @@ def run_shot(
     typer.echo(
         f"{result.shot_id} rendered with {result.adapter} -> {result.output_video}"
     )
+
+
+@app.command("prepare-continuity")
+def prepare_continuity(
+    project: Path = typer.Argument(..., exists=True, file_okay=False, dir_okay=True),
+) -> None:
+    """Extract reference frames from establishing shots for later identity/scene continuity."""
+    result = prepare_continuity_assets(project)
+    typer.echo(json.dumps(result, indent=2))
 
 
 @app.command("verify-ltx")
