@@ -28,9 +28,10 @@ clipper-agent = "clipper_agent.cli:app"
 nerve-studio = "studio.cli:app"
 nerve-analytics = "analytics.cli:app"
 nerve-virality = "virality.cli:app"
+nerve-router = "router.cli:app"
 
 [tool.setuptools.packages.find]
-include = ["clipper_agent*", "virality*", "studio*", "analytics*"]
+include = ["clipper_agent*", "virality*", "studio*", "analytics*", "router*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
