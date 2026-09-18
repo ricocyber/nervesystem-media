@@ -1,0 +1,89 @@
+{
+  "global_visual_bible": {
+    "look": "photoreal cinematic industrial technology commercial",
+    "camera_language": "grounded physical camera, restrained dolly and tracking moves, realistic lens behavior",
+    "grade": "deep neutral blacks, cool steel ambience, restrained amber practical warning light",
+    "texture": "real skin, real fabric, brushed metal, glass, practical screens, subtle atmospheric haze",
+    "avoid": [
+      "slideshow",
+      "generic sci-fi neon",
+      "floating hologram clutter",
+      "plastic skin",
+      "over-sharpened faces",
+      "extra fingers",
+      "warped hands",
+      "unreadable fake text",
+      "exaggerated action acting",
+      "cyberpunk city aesthetic",
+      "cartoon rendering"
+    ]
+  },
+  "shots": [
+    {
+      "id": "S01",
+      "preferred_adapter": ["digital-human", "ltx-video", "blender"],
+      "prompt": "Photoreal night-shift industrial operations center. One calm adult systems operator in a dark charcoal technical work jacket sits at a professional console, wall displays casting cool blue-gray practical light across natural skin. Subtle amber warning indicator in background. Slow cinematic dolly toward operator from shoulder height, 35mm lens, shallow depth of field, realistic workstation, restrained performance, high-end enterprise technology commercial.",
+      "continuity_ids": ["OPERATOR_01", "CONTROL_ROOM_01"],
+      "duration_seconds": 2.2
+    },
+    {
+      "id": "S02",
+      "preferred_adapter": ["motion-graphics", "blender", "ffmpeg"],
+      "prompt": "Macro insert of a professional operations console display, realistic enterprise software interface, clean typography area reserved for exact composited text, dark graphite UI, subtle amber state indicator, reflected control-room light on glass, 85mm macro camera feel.",
+      "overlay_text": "TRANSFER APPROVED — EXECUTING",
+      "duration_seconds": 1.8
+    },
+    {
+      "id": "S03",
+      "preferred_adapter": ["blender", "ltx-video"],
+      "prompt": "Photoreal industrial robotic arm beside heavy manufacturing equipment beginning a precise movement. Low 24mm camera angle, realistic servo motion, safety fencing and machine surfaces, distant practical sparks only in far background, grounded factory lighting, no disaster, premium industrial commercial cinematography.",
+      "continuity_ids": ["FACTORY_01", "ROBOT_01"],
+      "duration_seconds": 2.1
+    },
+    {
+      "id": "S04",
+      "preferred_adapter": ["motion-graphics", "ffmpeg"],
+      "prompt": "High-end financial operations interface showing a high-value transfer progressing through a payment rail. Exact numbers and labels composited in post. Dark restrained enterprise UI, no crypto coin graphics, no floating holograms.",
+      "duration_seconds": 1.9
+    },
+    {
+      "id": "S05",
+      "preferred_adapter": ["editor", "vfx"],
+      "prompt": "Intercut the industrial robot and payment transaction, then freeze both mid-action on a hard physical relay sound. Introduce a dark translucent authority barrier visually separating AI request from real-world actuation. Center exact title text in post.",
+      "overlay_text": "WHO AUTHORIZED IT?",
+      "duration_seconds": 2.8
+    },
+    {
+      "id": "S06",
+      "preferred_adapter": ["motion-graphics", "blender", "ffmpeg"],
+      "prompt": "Restrained cinematic authority-check visualization integrated into a real control system: verify requester identity, action intent, governing policy, target system and operating limits. Clean industrial interface, legible information hierarchy, subtle depth and reflections, no fantastical holograms.",
+      "duration_seconds": 4.2
+    },
+    {
+      "id": "S07",
+      "preferred_adapter": ["motion-graphics", "ffmpeg"],
+      "prompt": "Three rapid professional system decision inserts, each with exact composited status: DENIED in restrained red, QUARANTINED in amber, AUTHORIZED in green. Physical relay/tactile visual language, clean enterprise interface.",
+      "duration_seconds": 4.0
+    },
+    {
+      "id": "S08",
+      "preferred_adapter": ["blender", "ltx-video"],
+      "prompt": "Same industrial robotic arm from earlier completes the now-authorized action with precise controlled movement. 50mm tracking shot, realistic machinery inertia, stable factory geometry, premium industrial cinematography.",
+      "continuity_ids": ["FACTORY_01", "ROBOT_01"],
+      "duration_seconds": 3.2
+    },
+    {
+      "id": "S09",
+      "preferred_adapter": ["motion-graphics", "ffmpeg"],
+      "prompt": "Cryptographic action receipt assembles as a clean enterprise audit record. Reserve exact text fields for post compositing: Requested by, Authorized policy, Target, Executed action, Time, Proof. Subtle mechanical/data ticks, realistic UI, no crypto coin imagery.",
+      "duration_seconds": 2.8
+    },
+    {
+      "id": "S10",
+      "preferred_adapter": ["digital-human", "ltx-video", "blender"],
+      "prompt": "Return to the exact same night operations center and same operator. Operator watches the wall display calmly as the camera performs a slow 35mm push toward the control wall. Natural skin and fabric, same charcoal technical jacket, same cool monitor key light and amber background practical. End with clean negative space for brand mark and doctrine.",
+      "continuity_ids": ["OPERATOR_01", "CONTROL_ROOM_01"],
+      "duration_seconds": 5.0
+    }
+  ]
+}
