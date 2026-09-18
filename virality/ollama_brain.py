@@ -33,8 +33,9 @@ class RankedIdea:
 
 
 class OllamaViralityBrain:
-    def __init__(self, model: str = "qwen2.5:7b", base_url: str = "http://127.0.0.1:11434", timeout: float = 300):
+    def __init__(self, model: str = "qwen2.5:7b", critic_model: str | None = None, base_url: str = "http://127.0.0.1:11434", timeout: float = 300):
         self.model = model
+        self.critic_model = critic_model or model
         self.base_url = base_url.rstrip("/")
         self.timeout = timeout
 
@@ -44,15 +45,15 @@ class OllamaViralityBrain:
             if not r.ok:
                 return {"ready": False, "status": r.status_code}
             models = [(x.get("name") or x.get("model")) for x in r.json().get("models", [])]
-            return {"ready": True, "model": self.model, "models": models}
+            return {"ready": True, "model": self.model, "critic_model": self.critic_model, "models": models}
         except requests.RequestException as exc:
             return {"ready": False, "reason": f"{type(exc).__name__}: {exc}"}
 
-    def _json_chat(self, prompt: str, temperature: float) -> dict:
+    def _json_chat(self, prompt: str, temperature: float, model: str | None = None) -> dict:
         r = requests.post(
             self.base_url + "/api/chat",
             json={
-                "model": self.model,
+                "model": model or self.model,
                 "stream": False,
                 "format": "json",
                 "messages": [{"role": "user", "content": prompt}],
@@ -132,7 +133,7 @@ Return only JSON:
 Ideas:
 {json.dumps([asdict(x) for x in batch], ensure_ascii=False)}
 """.strip()
-            data = self._json_chat(prompt, 0.1)
+            data = self._json_chat(prompt, 0.1, model=self.critic_model)
             responses = data.get("scores")
             if not isinstance(responses, list):
                 raise ViralityBrainError("Missing critic scores")
