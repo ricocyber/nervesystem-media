@@ -5,9 +5,11 @@ from pathlib import Path
 
 import typer
 
+from .discovery import write_discovery_report
 from .executor import execute_project
 from .models import ProductionBrief
 from .orchestrator import StudioOrchestrator
+from .queue import build_shot_queue
 from .runtime import check_runtime, save_runtime_report
 
 app = typer.Typer(no_args_is_help=True)
@@ -53,6 +55,15 @@ def doctor(
         typer.echo(f"Wrote runtime report to {output}")
 
 
+@app.command("inspect-media")
+def inspect_media(
+    output: Path = typer.Option(Path("media_repo_report.json"), "--output"),
+) -> None:
+    """Inspect local media repos for license/config/entrypoint candidates."""
+    write_discovery_report(output)
+    typer.echo(f"Wrote media repo discovery report to {output}")
+
+
 @app.command("check-project")
 def check_project(
     project: Path = typer.Argument(..., exists=True, file_okay=False, dir_okay=True),
@@ -65,6 +76,16 @@ def check_project(
     if output:
         output.write_text(payload, encoding="utf-8")
         typer.echo(f"Wrote project execution report to {output}")
+
+
+@app.command("prep-project")
+def prep_project(
+    project: Path = typer.Argument(..., exists=True, file_okay=False, dir_okay=True),
+    output_dir: Path | None = typer.Option(None, "--output-dir"),
+) -> None:
+    """Create one queued work order per cinematic shot."""
+    queue = build_shot_queue(project, output_dir)
+    typer.echo(f"Queued {queue['shot_count']} shots for {queue['project']}.")
 
 
 if __name__ == "__main__":
