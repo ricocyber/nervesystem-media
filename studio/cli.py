@@ -23,6 +23,7 @@ from .autonomous import run_autonomous_project
 from .adapters.musetalk_mac import MuseTalkMacAdapter
 from .digital_human import render_talking_human
 from .podcast import build_camera_timeline, render_host_video
+from .podcast_edit import edit_podcast_master
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -205,6 +206,27 @@ def render_ltx_shot(
         conditioning_media_path=conditioning,
     )
     typer.echo(json.dumps(result.__dict__, indent=2))
+
+
+@app.command("edit-podcast")
+def edit_podcast(
+    project: Path = typer.Argument(..., exists=True, file_okay=False, dir_okay=True),
+    host_a_video: Path = typer.Option(..., "--host-a-video", exists=True),
+    host_b_video: Path = typer.Option(..., "--host-b-video", exists=True),
+    host_a_audio: Path = typer.Option(..., "--host-a-audio", exists=True),
+    host_b_audio: Path = typer.Option(..., "--host-b-audio", exists=True),
+    output: Path | None = typer.Option(None, "--output"),
+) -> None:
+    """Assemble a speaker-aware two-host podcast master."""
+    master = edit_podcast_master(
+        project_dir=project,
+        host_a_video=host_a_video,
+        host_b_video=host_b_video,
+        host_a_audio=host_a_audio,
+        host_b_audio=host_b_audio,
+        output_path=output,
+    )
+    typer.echo(f"Rendered podcast master -> {master}")
 
 
 @app.command("podcast-camera-plan")
