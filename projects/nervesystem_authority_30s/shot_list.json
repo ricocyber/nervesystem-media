@@ -1,0 +1,96 @@
+{
+  "fps": 24,
+  "resolution": "1920x1080",
+  "shots": [
+    {
+      "id": "S01",
+      "start": 0.0,
+      "end": 2.2,
+      "type": "live_action_style",
+      "description": "Night operations center, human operator at console, slow dolly-in.",
+      "camera": "35mm, shoulder-height, shallow depth of field",
+      "lighting": "low-key practical monitors, cool ambient, subtle amber alerts",
+      "character_ids": ["OPERATOR_01"],
+      "continuity": ["operator seated", "dark charcoal work jacket"]
+    },
+    {
+      "id": "S02",
+      "start": 2.2,
+      "end": 4.0,
+      "type": "screen_insert",
+      "description": "Agent command appears: TRANSFER APPROVED — EXECUTING.",
+      "camera": "85mm macro-style UI insert",
+      "continuity": ["same control room UI language"]
+    },
+    {
+      "id": "S03",
+      "start": 4.0,
+      "end": 6.1,
+      "type": "industrial",
+      "description": "Robotic arm begins motion beside heavy equipment.",
+      "camera": "24mm low angle, controlled handheld energy",
+      "lighting": "industrial practicals, sparks far background"
+    },
+    {
+      "id": "S04",
+      "start": 6.1,
+      "end": 8.0,
+      "type": "finance_software",
+      "description": "High-value payment rail initiates; transfer state visibly progressing.",
+      "camera": "clean high-contrast UI insert"
+    },
+    {
+      "id": "S05",
+      "start": 8.0,
+      "end": 10.8,
+      "type": "freeze_event",
+      "description": "Robot and transaction freeze mid-action as authority layer interrupts.",
+      "camera": "rapid intercut, then hard stop",
+      "text": "WHO AUTHORIZED IT?"
+    },
+    {
+      "id": "S06",
+      "start": 10.8,
+      "end": 15.0,
+      "type": "authority_visualization",
+      "description": "NerveSystem verifies identity, policy, requested action, target, and operating limits.",
+      "camera": "layered cinematic HUD compositing, not sci-fi clutter"
+    },
+    {
+      "id": "S07",
+      "start": 15.0,
+      "end": 19.0,
+      "type": "decision_montage",
+      "description": "Three distinct requests resolve DENIED, QUARANTINED, AUTHORIZED.",
+      "camera": "fast clean inserts with tactile relay sounds"
+    },
+    {
+      "id": "S08",
+      "start": 19.0,
+      "end": 22.2,
+      "type": "industrial_payoff",
+      "description": "Authorized robotic action completes safely and precisely.",
+      "camera": "50mm tracking shot"
+    },
+    {
+      "id": "S09",
+      "start": 22.2,
+      "end": 25.0,
+      "type": "receipt",
+      "description": "Cryptographic action receipt assembles with factual fields.",
+      "camera": "clean front-facing UI, restrained motion"
+    },
+    {
+      "id": "S10",
+      "start": 25.0,
+      "end": 30.0,
+      "type": "brand_end",
+      "description": "Back to operator; slow push into NerveSystem mark and final doctrine.",
+      "camera": "35mm slow push",
+      "text": [
+        "NO ACTION WITHOUT AUTHORITY.",
+        "NO AUTHORITY WITHOUT PROOF."
+      ]
+    }
+  ]
+}

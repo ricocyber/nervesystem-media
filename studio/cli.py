@@ -5,8 +5,13 @@ from pathlib import Path
 
 import typer
 
+from .discovery import write_discovery_report
+from .executor import execute_project
 from .models import ProductionBrief
 from .orchestrator import StudioOrchestrator
+from .queue import build_shot_queue
+from .runtime import check_runtime, save_runtime_report
+from .shot_runner import run_shot_task
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -33,9 +38,72 @@ def plan(
         realism=realism,  # type: ignore[arg-type]
         language=language,
     )
-    plan = StudioOrchestrator().plan(brief)
-    output.write_text(json.dumps(plan.to_dict(), indent=2), encoding="utf-8")
-    typer.echo(f"Wrote {output} with {len(plan.work_orders)} work orders.")
+    production_plan = StudioOrchestrator().plan(brief)
+    output.write_text(json.dumps(production_plan.to_dict(), indent=2), encoding="utf-8")
+    typer.echo(f"Wrote {output} with {len(production_plan.work_orders)} work orders.")
+
+
+@app.command()
+def doctor(
+    output: Path | None = typer.Option(None, "--output"),
+) -> None:
+    """Audit the local production workstation without pretending missing tools exist."""
+    checks = check_runtime()
+    for item in checks:
+        typer.echo(f"{item.name:16} {item.status:20} {item.path or ''}")
+    if output:
+        save_runtime_report(output)
+        typer.echo(f"Wrote runtime report to {output}")
+
+
+@app.command("inspect-media")
+def inspect_media(
+    output: Path = typer.Option(Path("media_repo_report.json"), "--output"),
+) -> None:
+    """Inspect local media repos for license/config/entrypoint candidates."""
+    write_discovery_report(output)
+    typer.echo(f"Wrote media repo discovery report to {output}")
+
+
+@app.command("check-project")
+def check_project(
+    project: Path = typer.Argument(..., exists=True, file_okay=False, dir_okay=True),
+    output: Path | None = typer.Option(None, "--output"),
+) -> None:
+    """Validate a production project and report runnable vs blocked stages."""
+    result = execute_project(project)
+    payload = json.dumps(result, indent=2)
+    typer.echo(payload)
+    if output:
+        output.write_text(payload, encoding="utf-8")
+        typer.echo(f"Wrote project execution report to {output}")
+
+
+@app.command("prep-project")
+def prep_project(
+    project: Path = typer.Argument(..., exists=True, file_okay=False, dir_okay=True),
+    output_dir: Path | None = typer.Option(None, "--output-dir"),
+) -> None:
+    """Create one queued work order per cinematic shot."""
+    queue = build_shot_queue(project, output_dir)
+    typer.echo(f"Queued {queue['shot_count']} shots for {queue['project']}.")
+
+
+@app.command("run-shot")
+def run_shot(
+    task: Path = typer.Argument(..., exists=True, file_okay=True, dir_okay=False),
+    config: Path = typer.Option(Path("studio.local.json"), "--config"),
+) -> None:
+    """Execute exactly one queued shot with the first enabled compatible local adapter."""
+    if not config.exists():
+        raise typer.BadParameter(
+            "Local adapter config not found. Copy studio.local.example.json to studio.local.json "
+            "and fill only verified entrypoints."
+        )
+    result = run_shot_task(task, config)
+    typer.echo(
+        f"{result.shot_id} rendered with {result.adapter} -> {result.output_video}"
+    )
 
 
 if __name__ == "__main__":

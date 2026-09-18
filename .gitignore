@@ -11,3 +11,6 @@ clips/
 *.mkv
 *.wav
 *.jsonl
+
+studio.local.json
+projects/*/work/
