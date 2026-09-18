@@ -30,6 +30,7 @@ def funnel(
     count: int = typer.Option(100, "--count", min=10, max=500),
     shortlist: int = typer.Option(10, "--shortlist", min=1, max=50),
     package_top: int = typer.Option(3, "--package-top", min=1, max=10),
+    research_packet: Path | None = typer.Option(None, "--research-packet"),
 ) -> None:
     """Run the full 100-to-1 idea/critic/packaging funnel locally."""
     payload = run_virality_funnel(
@@ -41,6 +42,7 @@ def funnel(
         count=count,
         shortlist=shortlist,
         package_top=package_top,
+        research_packet_path=research_packet,
     )
     typer.echo(
         json.dumps(
