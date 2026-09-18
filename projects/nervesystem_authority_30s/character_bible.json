@@ -1,0 +1,25 @@
+{
+  "characters": [
+    {
+      "id": "OPERATOR_01",
+      "role": "night-shift systems operator",
+      "presentation": "adult professional operator, calm and alert",
+      "wardrobe": "dark charcoal technical work jacket, no visible logos",
+      "hair": "natural, practical",
+      "performance": "quiet concentration; no exaggerated fear",
+      "continuity_rules": [
+        "same jacket and workstation in all control-room shots",
+        "same face and approximate age across shots",
+        "no jewelry changes",
+        "monitor light direction remains consistent"
+      ]
+    }
+  ],
+  "voice": {
+    "id": "NARRATOR_01",
+    "presentation": "deep calm male narrator",
+    "delivery": "measured, confident, restrained",
+    "pace_wpm": 125,
+    "avoid": ["movie-trailer growl", "sales hype", "robotic cadence"]
+  }
+}
