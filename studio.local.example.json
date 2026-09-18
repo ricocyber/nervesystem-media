@@ -1,0 +1,52 @@
+{
+  "adapters": {
+    "ltx-video": {
+      "enabled": false,
+      "cwd": "/Users/YOU/ltx-video",
+      "argv": [
+        "python",
+        "REPLACE_WITH_VERIFIED_ENTRYPOINT.py",
+        "--prompt",
+        "{prompt}",
+        "--output",
+        "{output}"
+      ]
+    },
+    "digital-human": {
+      "enabled": false,
+      "cwd": "/Users/YOU/digital-human",
+      "argv": [
+        "python",
+        "REPLACE_WITH_VERIFIED_ENTRYPOINT.py",
+        "--prompt",
+        "{prompt}",
+        "--output",
+        "{output}"
+      ]
+    },
+    "blender": {
+      "enabled": false,
+      "cwd": null,
+      "argv": [
+        "python",
+        "REPLACE_WITH_PROJECT_BLENDER_WRAPPER.py",
+        "--shot",
+        "{shot_id}",
+        "--output",
+        "{output}"
+      ]
+    },
+    "motion-graphics": {
+      "enabled": false,
+      "cwd": null,
+      "argv": [
+        "python",
+        "REPLACE_WITH_MOTION_GRAPHICS_WRAPPER.py",
+        "--shot",
+        "{shot_id}",
+        "--output",
+        "{output}"
+      ]
+    }
+  }
+}
