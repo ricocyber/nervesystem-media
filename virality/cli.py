@@ -13,7 +13,7 @@ app = typer.Typer(no_args_is_help=True)
 
 @app.command("doctor")
 def doctor(
-    model: str = typer.Option("qwen2.5:7b", "--model"),
+    model: str = typer.Option("auto", "--model"),
     base_url: str = typer.Option("http://127.0.0.1:11434", "--base-url"),
 ) -> None:
     """Check the local Ollama virality model."""
@@ -39,6 +39,7 @@ def funnel(
         channel_promise=channel_promise,
         output_dir=output,
         model=model,
+        critic_model=critic_model,
         count=count,
         shortlist=shortlist,
         package_top=package_top,
