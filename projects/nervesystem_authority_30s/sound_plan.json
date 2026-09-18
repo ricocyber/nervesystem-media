@@ -1,0 +1,20 @@
+{
+  "bed": "low industrial electrical room tone with sub-bass tension",
+  "music": "minimal cinematic pulse; no heroic trailer music",
+  "events": [
+    {"time": 0.0, "sound": "quiet HVAC/electrical hum"},
+    {"time": 2.2, "sound": "soft digital command confirmation"},
+    {"time": 4.0, "sound": "servo motor + machine movement"},
+    {"time": 6.1, "sound": "subtle payment confirmation ticks"},
+    {"time": 8.0, "sound": "hard physical relay-clack followed by near-silence"},
+    {"time": 12.0, "sound": "low authority-check pulses"},
+    {"time": 15.0, "sound": "three decision impacts: denied/quarantined/authorized"},
+    {"time": 19.0, "sound": "machine action resumes"},
+    {"time": 22.2, "sound": "cryptographic receipt assembly ticks"},
+    {"time": 25.0, "sound": "deep restrained brand impact"}
+  ],
+  "mix_target": {
+    "integrated_lufs": -14,
+    "true_peak_db": -1.5
+  }
+}
