@@ -1,0 +1,21 @@
+{
+  "project": "nervesystem_authority_30s",
+  "status": "preproduction_complete",
+  "stages": {
+    "research": "complete",
+    "concept": "complete",
+    "script": "complete",
+    "shot_list": "complete",
+    "character_bible": "complete",
+    "sound_plan": "complete",
+    "generation_manifest": "complete",
+    "voice_generation": "blocked_until_runtime_verified",
+    "character_generation": "blocked_until_runtime_verified",
+    "shot_generation": "blocked_until_runtime_verified",
+    "vfx": "pending",
+    "edit": "pending",
+    "qc": "pending",
+    "master": "pending"
+  },
+  "next_machine_action": "nerve-studio doctor --output runtime_report.json"
+}
